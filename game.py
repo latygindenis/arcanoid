@@ -62,4 +62,4 @@ while done:
     sprite_group.draw(screen)
     window.blit(screen, (0, 0))
     pygame.display.flip()
-    timer.tick(60)
+    timer.tick(60)#cdvdcfbf
