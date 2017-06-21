@@ -18,7 +18,7 @@ arcanoid = Arcanoid(250, 350)
 level = [
     '----------',
     ' -------- ',
-    '  ------  ',
+    '  --  --  ',
     '   ----   ',
     '    --    ']
 
@@ -29,26 +29,27 @@ platf = []
 
 x = 25
 y = 25
+i=0
 for row in level:
     for col in row:
         if col == '-':
             pl = Platform (x, y)
             sprite_group.add(pl)
             platf.append(pl)
+            i+=1
         x += 35
     y += 40
     x = 25
 
 done = True
-pygame.key.set_repeat(1, 1)
+pygame.key.set_repeat(1, 1) #Залипание клавиш
 
 while done:
-
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             done = False
 
-        if e.type ==pygame.KEYDOWN:
+        if e.type == pygame.KEYDOWN:
             if e.key == pygame.K_LEFT:
                 left=True
                 right=False
@@ -57,9 +58,31 @@ while done:
                 left=False
         arcanoid.update(left, right)
 
+
     screen.fill((50, 50, 50))
-    ball.update(arcanoid.rect.x, arcanoid.rect.y, platf)
+
+    if (ball.update(arcanoid.rect.x, arcanoid.rect.y, platf)==False): #Выход за нижнюю границу
+        i=0
+        x = 25
+        y = 25
+        for row in level:
+            for col in row:
+                    if col == '-':
+                        platf[i].rect.y=y
+                        platf[i].rect.x=x
+                        i+=1
+                    x+=35
+            y += 40
+            x = 25
+
+        ball.rect.x = 250
+        ball.rect.y = 250
+        ball.update(arcanoid.rect.x, arcanoid.rect.y, platf)
+
+
+
     sprite_group.draw(screen)
+
     window.blit(screen, (0, 0))
     pygame.display.flip()
-    timer.tick(60)#cdvdcfbf
+    timer.tick(60)

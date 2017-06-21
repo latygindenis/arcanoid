@@ -25,21 +25,19 @@ class Ball(Sprite):
         self.rect.x = x
         self.rect.y = y
 
-    def collide(self, platforms):
+    def collide(self, platforms):#Обработка столкновений с плитками
         for pl in platforms:
-
             if collide_rect(self, pl):
-
-                if (pl.rect.left == self.rect.right and Ball.go_right == True and Ball.go_up == True):
+                if (pl.rect.right >= self.rect.right and Ball.go_right == True and Ball.go_up == True):
                     Ball.go_right = False
                     Ball.go_left = True
-                if (pl.rect.right == self.rect.left and Ball.go_left == True and Ball.go_up == True):
+                if (pl.rect.left <= self.rect.left and Ball.go_left == True and Ball.go_up == True):
                     Ball.go_left = False
                     Ball.go_right = True
-                if (pl.rect.left == self.rect.right and Ball.go_right == True and Ball.go_down == True):
+                if (pl.rect.right >= self.rect.right and Ball.go_right == True and Ball.go_down == True):
                     Ball.go_right = False
                     Ball.go_left = True
-                if (pl.rect.right == self.rect.left and Ball.go_left == True and Ball.go_down == True):
+                if (pl.rect.left <= self.rect.left and Ball.go_left == True and Ball.go_down == True):
                     Ball.go_left = False
                     Ball.go_right = True
 
@@ -58,9 +56,6 @@ class Ball(Sprite):
                     Ball.go_up = True
                 pl.rect.x=-500
 
-
-
-
     def update(self, x_platform, y_platform, platforms):
         if (Ball.go_right == True and Ball.go_down == True):
             self.rect.x += 1.2
@@ -70,9 +65,7 @@ class Ball(Sprite):
                 Ball.go_left = True
                 Ball.Vel_y = random.uniform(1.0, 2.0)
             if (self.rect.y > 360):
-                Ball.go_down = False
-                Ball.go_up = True
-                Ball.Vel_y = random.uniform(1.0, 2.0)
+                return 0
         if (Ball.go_left == True and Ball.go_down == True):
             self.rect.x -= 1.2
             self.rect.y += Ball.Vel_y
@@ -81,9 +74,7 @@ class Ball(Sprite):
                 Ball.go_right = True
                 Ball.Vel_y = random.uniform(1.0, 2.0)
             if (self.rect.y > 360):
-                Ball.go_down = False
-                Ball.go_up = True
-                Ball.Vel_y = random.uniform(1.0, 2.0)
+                return 0
         if (Ball.go_right == True and Ball.go_up == True):
             self.rect.x += 1.2
             self.rect.y -= Ball.Vel_y
